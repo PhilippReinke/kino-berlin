@@ -46,8 +46,8 @@ func (a *App) FetchScreenings(filters ...domain.Filter) ([]domain.Screening, err
 	return screenings, nil
 }
 
-func (a *App) GetAvailableCinemas() ([]string, error) {
-	screenings, err := a.FetchScreenings(domain.ExpiredScreeningFilter())
+func (a *App) GetAvailableCinemas(filters ...domain.Filter) ([]string, error) {
+	screenings, err := a.FetchScreenings(filters...)
 	if err != nil {
 		return nil, err
 	}
@@ -67,8 +67,8 @@ func (a *App) GetAvailableCinemas() ([]string, error) {
 	return cinemas, nil
 }
 
-func (a *App) GetAvailableDates() ([]time.Time, error) {
-	screenings, err := a.FetchScreenings(domain.ExpiredScreeningFilter())
+func (a *App) GetAvailableDates(filters ...domain.Filter) ([]time.Time, error) {
+	screenings, err := a.FetchScreenings(filters...)
 	if err != nil {
 		return nil, err
 	}

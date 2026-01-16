@@ -8,14 +8,21 @@ import (
 	"github.com/PhilippReinke/kino-berlin/pkg/domain"
 )
 
+var (
+	defaultFilters = []domain.Filter{
+		domain.RecentlyUpdated(47 * time.Hour),
+		domain.AlreadyOver(),
+	}
+)
+
 func (h *Handler) handleSelects(w http.ResponseWriter, r *http.Request) {
-	cinemas, err := h.app.GetAvailableCinemas()
+	cinemas, err := h.app.GetAvailableCinemas(defaultFilters...)
 	if err != nil {
 		h.renderError(w, err)
 		return
 	}
 
-	dates, err := h.app.GetAvailableDates()
+	dates, err := h.app.GetAvailableDates(defaultFilters...)
 	if err != nil {
 		h.renderError(w, err)
 		return
@@ -43,19 +50,16 @@ func (h *Handler) handleScreenings(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	filters := []domain.Filter{
-		domain.ExpiredFilter(47 * time.Hour),
-		domain.ExpiredScreeningFilter(),
-	}
+	filters := defaultFilters
 
 	if dateStr := r.FormValue("dates"); dateStr != "" {
 		if date, err := time.Parse(time.DateOnly, dateStr); err == nil {
-			filters = append(filters, domain.DateFilter(date))
+			filters = append(filters, domain.DateMatches(date))
 		}
 	}
 
 	if cinema := r.FormValue("cinemas"); cinema != "" {
-		filters = append(filters, domain.CinemaFilter(cinema))
+		filters = append(filters, domain.CinemaMatches(cinema))
 	}
 
 	screenings, err := h.app.FetchScreenings(filters...)

@@ -1,6 +1,8 @@
 package domain
 
-import "time"
+import (
+	"time"
+)
 
 // Filter returns true if filter matches.
 //
@@ -8,7 +10,7 @@ import "time"
 // date.
 type Filter func(Screening) bool
 
-func DateFilter(date time.Time) Filter {
+func DateMatches(date time.Time) Filter {
 	year, month, day := date.Date()
 	return func(s Screening) bool {
 		sYear, sMonth, sDay := s.Start.Date()
@@ -16,19 +18,19 @@ func DateFilter(date time.Time) Filter {
 	}
 }
 
-func ExpiredFilter(maxAge time.Duration) Filter {
+func RecentlyUpdated(maxAge time.Duration) Filter {
 	return func(s Screening) bool {
 		return time.Since(s.UpdatedAt) < maxAge
 	}
 }
 
-func ExpiredScreeningFilter() Filter {
+func AlreadyOver() Filter {
 	return func(s Screening) bool {
 		return s.Start.After(time.Now())
 	}
 }
 
-func CinemaFilter(cinema string) Filter {
+func CinemaMatches(cinema string) Filter {
 	return func(s Screening) bool {
 		return s.Cinema == cinema
 	}
