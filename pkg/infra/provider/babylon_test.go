@@ -6,8 +6,9 @@ import (
 
 func TestBabylon_Name(t *testing.T) {
 	b := NewBabylon()
-	if got := b.Name(); got != "Kino Babylon" {
-		t.Errorf("Name() = %q, want %q", got, "Kino Babylon")
+	want := "Kino Babylon"
+	if got := b.Name(); got != want {
+		t.Errorf("Name() = %q, want %q", got, want)
 	}
 }
 

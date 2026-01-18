@@ -4,8 +4,9 @@ import "testing"
 
 func TestYorck_Name(t *testing.T) {
 	b := NewBabylon()
-	if got := b.Name(); got != "Yorck Kinos" {
-		t.Errorf("Name() = %q, want %q", got, "Yorck Kinos")
+	want := "Yorck Kinos"
+	if got := b.Name(); got != want {
+		t.Errorf("Name() = %q, want %q", got, want)
 	}
 }
 
