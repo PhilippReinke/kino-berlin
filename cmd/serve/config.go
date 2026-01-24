@@ -14,7 +14,7 @@ type Config struct {
 	StaticDir    string
 }
 
-func parseFlags() Config {
+func readConfig() Config {
 	host := flag.String("host", "localhost", "Host")
 	port := flag.String("port", "8080", "Port to listen on")
 	syncInterval := flag.Duration("sync-interval", 30*time.Minute, "Background sync interval (0 to disable)")

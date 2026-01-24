@@ -27,8 +27,6 @@ func (a *App) StartBackgroundSync() error {
 
 	a.syncWg.Go(func() {
 		defer a.syncWg.Done()
-		ticker := time.NewTicker(a.syncInterval)
-		defer ticker.Stop()
 
 		// initial sync immediately
 		log.Printf("Starting background sync (interval: %v)", a.syncInterval)
@@ -41,7 +39,7 @@ func (a *App) StartBackgroundSync() error {
 			case <-a.syncCtx.Done():
 				log.Printf("Background sync stopped")
 				return
-			case <-ticker.C:
+			case <-time.After(a.syncInterval):
 				log.Printf("Running scheduled sync")
 				if err := a.SyncFromProviders(a.syncCtx); err != nil {
 					log.Printf("Background sync failed: %v", err)

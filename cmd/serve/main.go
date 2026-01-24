@@ -17,7 +17,7 @@ import (
 )
 
 func main() {
-	cfg := parseFlags()
+	cfg := readConfig()
 
 	storage := storage.NewMemory()
 	babylon := provider.NewBabylon()
