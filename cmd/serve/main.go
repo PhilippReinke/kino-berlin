@@ -22,10 +22,11 @@ func main() {
 	storage := storage.NewMemory()
 	babylon := provider.NewBabylon()
 	yorck := provider.NewYorck()
+	uci := provider.NewUCI()
 
 	application := app.New(
 		storage,
-		[]domain.Provider{babylon, yorck},
+		[]domain.Provider{babylon, yorck, uci},
 		app.Config{
 			SyncInterval: cfg.SyncInterval,
 		},

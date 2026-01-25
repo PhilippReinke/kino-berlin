@@ -31,4 +31,5 @@ func (h *Handler) RegisterRoutes(mux *http.ServeMux) {
 	mux.Handle("GET /", http.FileServer(http.Dir(h.staticDir)))
 	mux.HandleFunc("GET /api/selects", h.handleSelects)
 	mux.HandleFunc("POST /api/screenings", h.handleScreenings)
+	// TODO: /api/screenings/json
 }

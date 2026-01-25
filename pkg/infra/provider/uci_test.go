@@ -17,7 +17,7 @@ func TestUCI_Scrape(t *testing.T) {
 }
 
 func TestUCI_Manual(t *testing.T) {
-	// t.Skip("manual test")
+	t.Skip("manual test")
 
 	// Usage:
 	// go test -v -run TestUCI_Manual pkg/infra/provider/*.go
